@@ -1,0 +1,51 @@
+.KBO {
+	position: fixed;
+	top: 50px;
+	bottom: 50px;
+	left: 50px;
+	right: 50px;
+	padding: 20px;
+	color: #fff;
+	background: rgba(0, 0, 0, .8);
+	border-radius: 10px;
+	font: 12px/1.5 Arial, sans-serif;
+	text-shadow: #000 1px 1px 7px;
+}
+
+	.KBO_groups {
+		max-height: 95%;
+		overflow: auto;
+	}
+	
+		.KBO_group {
+			float: left;
+			width: 50%;
+			margin-bottom: 30px;
+		}
+		
+			.KBO_group table {
+				border-collapse: collapse;
+			}
+			
+			.KBO_group th,
+			.KBO_group td {
+				padding: 0;
+			}
+			
+			.KBO_group_title {
+				color: #ed0;
+				font-weight: bold;
+				font-size: 16px;
+			}
+			
+				.KBO_shortcuts th {
+					text-align: right;
+					font-weight: normal;
+				}
+				
+				.KBO_shortcuts kbd {
+					padding: 0;
+					color: #ed0;
+					background: transparent;
+					border: 0;
+				}

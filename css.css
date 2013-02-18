@@ -1,0 +1,13 @@
+body {
+	color: #333;
+	background: #fff;
+	font: 100%/1.5 Arial, sans-serif;
+}
+
+kbd {
+	padding: .1em .3em;
+	color: #6a5a00;
+	background: #fff9c9;
+	border: 1px solid #e0d785;
+	font-size: 1.25em;
+}
