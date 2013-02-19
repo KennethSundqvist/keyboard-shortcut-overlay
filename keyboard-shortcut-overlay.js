@@ -3,7 +3,8 @@ var KSO = (function() {
 		d = w.document,
 		elOverlay,
 		templates = {
-			wrap: '<div class="KBO_title">$title</div><div class="KBO_groups">$groups</div>',
+//			wrap: '<div class="KBO_title">$title</div><div class="KBO_groups">$groups</div>',
+			wrap: '<div class="KBO_inner"><div class="KBO_title">$title</div><div class="KBO_groups">$groups</div></div>',
 			group: '<div class="KBO_group"><table><thead><td></td><td class="KBO_group_title">$title</td></tr></thead><tbody class="KBO_shortcuts">$shortcuts</tbody></table></div>',
 			shortcut: '<tr><th>$keys :&nbsp;</th><td>$description</td></tr>'
 		}
