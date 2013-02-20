@@ -1,9 +1,11 @@
-.KBO {
+.KSO {
+	-webkit-transition: opacity .2s;
 	position: fixed;
 	top: 20px;
 	bottom: 20px;
 	left: 20px;
 	right: 20px;
+	opacity: 1;
 	color: #fff;
 	background: rgba(0, 0, 0, .8);
 	border-radius: 10px;
@@ -11,48 +13,86 @@
 	text-shadow: #000 1px 1px 7px;
 }
 
-	.KBO_inner {
+.KSO_hidden {
+	opacity: 0;
+}
+
+	.KSO_inner {
 		padding: 20px 5%;
 	}
 
-		.KBO_groups {
+		.KSO_title {
+			font-size: 27px;
+			line-height: 1;
+		}
+
+		.KSO_filter {
 			position: absolute;
-			top: 50px;
+			top: 20px;
+			right: 20px;
+			font-size: 14px;
+			color: #eee;
+		}
+
+			.KSO_filter input {
+				color: #eee;
+				background: transparent;
+				border: 1px solid #999;
+				line-height: 1.5;
+			}
+	
+		.KSO_groups {
+			position: absolute;
+			top: 54px;
 			bottom: 20px;
 			left: 20px;
 			right: 20px;
 			overflow: auto;
 		}
 		
-			.KBO_group {
+			.KSO_group {
 				float: left;
 				width: 50%;
 				margin-bottom: 30px;
 			}
 			
-				.KBO_group table {
+				.KSO_group table {
 					border-collapse: collapse;
 				}
 				
-				.KBO_group th,
-				.KBO_group td {
+				.KSO_group th,
+				.KSO_group td {
 					padding: 0;
 				}
 				
-				.KBO_group_title {
+				.KSO_group_title {
 					color: #ed0;
 					font-weight: bold;
 					font-size: 16px;
 				}
 				
-					.KBO_shortcuts th {
-						text-align: right;
-						font-weight: normal;
+					.KSO_shortcuts tr {
+						-webkit-transition: opacity .2s;
+						opacity: 1;
 					}
-					
-					.KBO_shortcuts kbd {
-						padding: 0;
-						color: #ed0;
-						background: transparent;
-						border: 0;
+	
+					.KSO_filtered .KSO_shortcuts tr {
+						opacity: .3;
 					}
+	
+					.KSO_filtered .KSO_shortcuts .KSO_matched {
+						opacity: 1;
+					}
+	
+						.KSO_shortcuts th {
+							text-align: right;
+							font-weight: normal;
+						}
+						
+		
+						.KSO_shortcuts kbd {
+							padding: 0;
+							color: #ed0;
+							background: transparent;
+							border: 0;
+						}
