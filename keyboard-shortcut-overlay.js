@@ -91,8 +91,9 @@ var KSO = (function() {
 		
 		// Events
 		
-		// Filter shortcuts when the filter input value changes
-		elFilter.addEventListener('keydown', filterShortcuts, false)
+		// Filter shortcuts when the filter input value changes.
+		// Must use keyup event or else the new input won't be used.
+		elFilter.addEventListener('keyup', filterShortcuts, false)
 		elFilter.addEventListener('change', filterShortcuts, false)
 		
 		// Hide the overlay when the Escape key is pressed
@@ -154,9 +155,10 @@ var KSO = (function() {
 		}
 		currentFilter = input
 		
-		// No filtering
+		// No filtering if user only types whitespace characters
 		if (input.match(/^\s*$/)) {
 			elOverlay.className = elOverlay.className.replace(/\sKSO_filtered/g, '')
+		// Filter matching shortcuts
 		} else {
 			// Filter based on whitespace separated strings
 			input = input.split(/\s+/)
@@ -167,12 +169,7 @@ var KSO = (function() {
 				// Match against each string
 				for (x = 0; x < input.length; x++) {
 					if (match !== false && input[x]) {
-						if (shortcutsIndex[i].desc.indexOf(input[x]) > -1) {
-							match = true
-						}
-						else {
-							match = false
-						}
+						match = shortcutsIndex[i].desc.indexOf(input[x]) > -1 ? true : false
 					}
 				}
 				
