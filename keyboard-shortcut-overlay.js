@@ -15,6 +15,8 @@ var KSO = (function() {
 		// Timers for showing/hiding overlay animation
 		showTimer,
 		hideTimer,
+		// RegExp cache
+		regExpCache = {},
 		// HTML templates to render with. Use $placeholders
 		templates = {
 			wrap: '<div class="KSO_inner"><div class="KSO_title">$title</div>$filter<div class="KSO_groups">$groups</div></div>',
@@ -40,6 +42,33 @@ var KSO = (function() {
 				}
 			}
 		}, false)
+	}
+	
+	// Set or remove class names on element
+	// action = set or remove
+	// el = element
+	// cn = class names, space separated
+	function handleClassName(action, el, cn) {
+		var regExp,
+			i = 0
+		
+		cn = cn.split(/\s+/)
+		
+		while (i < cn.length) {
+			if (cn[i] !== '') {
+				// Use the RegExp Cache
+				regExp = regExpCache[cn[i]] = regExpCache[cn[i]] || new RegExp('(\s*|^)' + cn[i] + '(\s*|$)', 'g')
+				
+				if (action === 'set' && !el.className.match(regExp)) {
+					el.className += ' ' + cn[i]
+				}
+				else if (action === 'remove' && el.className.match(regExp)) {
+					el.className = el.className.replace(regExp, '')
+				}
+			}
+			
+			i++
+		}
 	}
 	
 	function setupGui() {
@@ -84,7 +113,7 @@ var KSO = (function() {
 			.replace('$groups', groupsHtml)
 			
 		elOverlay = d.createElement('div')
-		elOverlay.className = 'KSO KSO_hidden'
+		handleClassName('set', elOverlay, 'KSO KSO_hidden')
 		elOverlay.innerHTML = overlayHtml
 		elFilter = elOverlay.getElementsByTagName('input')[0]
 		
@@ -127,7 +156,7 @@ var KSO = (function() {
 		// Hide overlay
 		if (visible) {
 			elFilter.blur()
-			elOverlay.className += ' KSO_hidden'
+			handleClassName('set', elOverlay, ' KSO_hidden')
 			hideTimer = setTimeout(function() {
 					elOverlay.style.display = 'none'
 			}, 1000)
@@ -137,7 +166,7 @@ var KSO = (function() {
 			// Use a timeout to make sure the element is displayed
 			showTimer = setTimeout(function() {
 				elFilter.focus()
-				elOverlay.className = elOverlay.className.replace(/ KSO_hidden/g, '')
+				handleClassName('remove', elOverlay, 'KSO_hidden')
 			}, 1)
 		}
 		
@@ -157,7 +186,7 @@ var KSO = (function() {
 		
 		// No filtering if user only types whitespace characters
 		if (input.match(/^\s*$/)) {
-			elOverlay.className = elOverlay.className.replace(/\sKSO_filtered/g, '')
+			handleClassName('remove', elOverlay, 'KSO_filtered')
 		// Filter matching shortcuts
 		} else {
 			// Filter based on whitespace separated strings
@@ -174,13 +203,13 @@ var KSO = (function() {
 				}
 				
 				if (match) {
-					shortcutsIndex[i].el.className = 'KSO_matched'
+					handleClassName('set', shortcutsIndex[i].el, 'KSO_matched')
 				} else {
-					shortcutsIndex[i].el.className = ''
+					handleClassName('remove', shortcutsIndex[i].el, 'KSO_matched')
 				}
 			}
 			
-			elOverlay.className += ' KSO_filtered'
+			handleClassName('set', elOverlay, 'KSO_filtered')
 		}
 	}
 	
