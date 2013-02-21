@@ -22,7 +22,7 @@ var KSO = (function() {
 			wrap: '<div class="KSO_inner"><div class="KSO_title">$title</div>$filter<div class="KSO_groups">$groups</div></div>',
 			group: '<div class="KSO_group"><table><thead><td></td><td class="KSO_group_title">$title</td></tr></thead><tbody class="KSO_shortcuts">$shortcuts</tbody></table></div>',
 			shortcut: '<tr><th>$keys :&nbsp;</th><td>$description</td></tr>',
-			filter: '<label class="KSO_filter">Filter: <input/></label>'
+			filter: '<label class="KSO_filter">Filter <input/></label>'
 		}
 	
 	function init(config) {
@@ -83,7 +83,6 @@ var KSO = (function() {
 			// Counters
 			i,
 			x
-		
 		
 		// Render GUI
 		
