@@ -158,8 +158,9 @@ var KSO = (function() {
 			elFilter.blur()
 			handleClassName('set', elOverlay, ' KSO_hidden')
 			hideTimer = setTimeout(function() {
-					elOverlay.style.display = 'none'
-			}, 1000)
+				elOverlay.style.display = 'none'
+				elFilter.value = ''
+			}, 250)
 		// Show overlay
 		} else {
 			elOverlay.style.display = 'block'
