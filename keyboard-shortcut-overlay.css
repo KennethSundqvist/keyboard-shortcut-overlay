@@ -1,5 +1,8 @@
 .KSO {
 	-webkit-transition: all .2s ease-out;
+	-moz-transition: all .2s ease-out;
+	-o-transition: all .2s ease-out;
+	transition: all .2s ease-out;
 	position: fixed;
 	top: 20px;
 	bottom: 20px;
@@ -16,6 +19,8 @@
 	opacity: 0;
 	-webkit-transform: scale(1.02);
 	-moz-transform: scale(1.02);
+	-ms-transform: scale(1.02);
+	-o-transform: scale(1.02);
 	transform: scale(1.02);
 }
 
@@ -75,6 +80,9 @@
 				
 					.KSO_shortcuts tr {
 						-webkit-transition: opacity .2s;
+						-moz-transition: opacity .2s;
+						-o-transition: opacity .2s;
+						transition: opacity .2s;
 						opacity: 1;
 					}
 	
