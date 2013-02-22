@@ -14,7 +14,23 @@
 
 <p>Press <kbd>?</kbd> to show or hide the overlay. Or press <kbd>Esc</kbd> to hide the overlay.</p>
 
+
+<h2>Generate Greasemonkey script</h2>
+
+<p>This will generate a greasemonkey script that uses the Keyboard Shortcut Overlay and your shortcuts.</p>
+
+<p>The version of Keyboard Shortcut Overlay loaded is always the latest one on GitHub: <a href="https://github.com/EvilOatmeal/keyboard-shortcut-overlay/blob/master/keyboard-shortcut-overlay.js">this one</a>.</p>
+
+<h3>Set shortcuts</h3>
+
+<form id="js-shortcutsConf"></form>
+
+<h3>Your Greasemonkey script</h3>
+
+
+
 <script src="keyboard-shortcut-overlay.js"></script>
+<script src="gmBuilder.js"></script>
 <script>
 	var config = {
 		title: 'Keyboard Shortcuts',
@@ -38,6 +54,8 @@
 	}
 	
 	KSO.init(config)
+	
+	KSO_gmBuilder.init({ formId: 'js-shortcutsConf'})
 </script>
 
 </body>

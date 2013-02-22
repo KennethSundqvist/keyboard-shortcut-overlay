@@ -1,4 +1,5 @@
 body {
+	margin: 1.5em 5.5555%;
 	color: #333;
 	background: #fff;
 	font: 100%/1.5 Arial, sans-serif;
@@ -11,3 +12,44 @@ kbd {
 	border: 1px solid #e0d785;
 	font-size: 1.25em;
 }
+
+/*
+	Greasemonkey script builder
+*/
+
+.gmBuilder_group {
+	margin: .375em 0;
+	padding: .375em;
+	border: 1px solid #ddd;
+}
+		
+	.gmBuilder_group input {
+		padding: 0 .375em;
+		color: #333;
+		background: #fff;
+		border: 1px solid #aaa;
+		font: 1em/1.4 Arial, sans-serif;
+	}
+	
+		.gmBuilder_group input:focus {
+			background: #edf7ff;
+			border-color: #3aacff;
+			outline: 0;
+		}
+
+	.gmBuilder_group_title {
+		margin-bottom: .375em;
+		padding-bottom: .375em;
+		border-bottom: 1px solid #ddd;
+		font-weight: bold;
+	}
+
+	.gmBuilder_group_shortcuts {
+		border-collapse: collapse;
+	}
+	
+		.gmBuilder_group_shortcuts th {
+			text-align: left;
+			font-size: .875em;
+			line-height: 1;
+		}
