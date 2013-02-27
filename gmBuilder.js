@@ -7,30 +7,41 @@
 		templates = {
 			group: {
 			   type: 'div', className: 'gmBuilder_group',
-			   html: '<div class="gmBuilder_group_title"><label>Group title <input name="groupTitle"></label></div>' +
+			   html: '<div class="gmBuilder_group_title"><label>Group title <input name="groupTitle"></label> <button data-trigger="deleteGroup">Delete group</button></div>' +
 			         '<table class="gmBuilder_group_shortcuts"><thead><tr><th>Shortcuts</th><th>Description</th><td></td></tr></thead><tbody></tbody></table>'
 			},
 			shortcut: {
 				type: 'tr',
-				html:'<td><input name="keys"></td><td><input name="desc"></td><td><button>Delete</button></td>'
+				html:'<td><input name="keys"></td><td><input name="desc"></td><td><button data-trigger="deleteShortcut">Delete</button></td>'
 			},
 			addButton: {
 				type: 'div', className: 'gmBuilder_addButton',
-				html: '<button>$text</button>'
+				html: '<button data-trigger="$trigger">$text</button>'
 			}
 		}
 	
 	function init(config) {
-		var addGroupButton = renderTemplate(templates.addButton, { text: 'Add another group' })
+		var addGroupButton = renderTemplate(templates.addButton, { text: 'Add another group', trigger: 'addGroup' }),
+			elGroup,
+			elShortcut
 		
 		elForm = d.getElementById(config.formId)
 		elForm.appendChild(addGroupButton)
-		addGroupButton.addEventListener('click', function(e) {
+		
+		elForm.addEventListener('click', function(e) {
+			var trigger = e.target.getAttribute('data-trigger')
+			if (!trigger) return
 			e.preventDefault();
-			addNewGroup()
+			
+			switch (trigger) {
+				case 'addGroup': addGroup(); break
+				case 'deleteGroup': deleteGroup(e.target.parentElement.parentElement); break
+				case 'addShortcuts': addShortcuts(e.target.parentElement.parentElement.querySelector('tbody'), 5); break
+				case 'deleteShortcut': deleteShortcut(e.target.parentElement.parentElement); break
+			}
 		}, false)
 		
-		addNewGroup()
+		addGroup()
 	}
 	
 	function renderTemplate(template, content) {
@@ -50,32 +61,47 @@
 		return el
 	}
 	
-	function addNewGroup() {
-		var group = renderTemplate(templates.group, {}),
+	function addGroup() {
+		var group = renderTemplate(templates.group),
 			shortcuts = group.querySelector('tbody'),
 			shortcut = renderTemplate(templates.shortcut, {}),
-			addShortcut = renderTemplate(templates.addButton, { text: 'Add more shortcuts' })
-		
-		addShortcut.addEventListener('click', function(e) {
-			e.preventDefault();
-			addMoreShortcuts(shortcuts, 3)
-		}, false)
+			addShortcut = renderTemplate(templates.addButton, { text: 'Add more shortcuts', trigger: 'addShortcuts' })
 		
 		shortcuts.appendChild(shortcut)
 		group.appendChild(addShortcut)
 		elForm.appendChild(group)
 	}
 	
-	function addMoreShortcuts(group, numberOfShortcuts) {
-		var shortcut,
-			first = true
+	function deleteGroup(elGroup) {
+		var groupTitle = elGroup.querySelector('input[name=groupTitle]').value
 		
-		while (numberOfShortcuts > 0) {
-			shortcut = renderTemplate(templates.shortcut, {})
+		if (confirm('Delete the group "' + groupTitle + '"?')) {
+			elGroup.remove()
+			
+			if (d.querySelectorAll('.gmBuilder_group').length === 0) {
+				addGroup()
+			}
+		}
+	}
+	
+	function addShortcuts(group, numberOfShortcuts) {
+		var shortcut,
+			i = 0
+		
+		for ( ; i < numberOfShortcuts; i++) {
+			shortcut = renderTemplate(templates.shortcut)
 			group.appendChild(shortcut)
-			if (first) shortcut.querySelector('input').focus()
-			first = false
-			numberOfShortcuts--
+			if (i === 0) shortcut.querySelector('input').focus()
+		}
+	}
+	
+	function deleteShortcut(elShortcut) {
+		var elGroup = elShortcut.parentElement
+		
+		elShortcut.remove()
+		
+		if (elGroup.children.length === 0) {
+			addShortcuts(elGroup, 1)
 		}
 	}
 	
