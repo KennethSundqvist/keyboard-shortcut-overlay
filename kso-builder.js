@@ -1,4 +1,4 @@
-;var KSO_gmBuilder = (function() {
+;var KSO_builder = (function() {
 	var w = window,
 		d = w.document,
 		// Form element
@@ -6,16 +6,16 @@
 		// HTML templates to render with. Use $placeholders
 		templates = {
 			group: {
-			   type: 'div', className: 'gmBuilder_group',
-			   html: '<div class="gmBuilder_group_title"><label>Group title <input name="groupTitle"></label> <button data-trigger="deleteGroup">Delete group</button></div>' +
-			         '<table class="gmBuilder_group_shortcuts"><thead><tr><th>Shortcuts</th><th>Description</th><td></td></tr></thead><tbody></tbody></table>'
+			   type: 'div', className: 'ksoBuilder_group',
+			   html: '<div class="ksoBuilder_group_title"><label>Group title <input name="groupTitle"></label> <button data-trigger="deleteGroup">Delete group</button></div>' +
+			         '<table class="ksoBuilder_group_shortcuts"><thead><tr><th>Shortcuts</th><th>Description</th><td></td></tr></thead><tbody></tbody></table>'
 			},
 			shortcut: {
 				type: 'tr',
 				html:'<td><input name="keys"></td><td><input name="desc"></td><td><button data-trigger="deleteShortcut">Delete</button></td>'
 			},
 			addButton: {
-				type: 'div', className: 'gmBuilder_addButton',
+				type: 'div', className: 'ksoBuilder_addButton',
 				html: '<button data-trigger="$trigger">$text</button>'
 			}
 		}
@@ -78,7 +78,7 @@
 		if (confirm('Delete the group "' + groupTitle + '"?')) {
 			elGroup.remove()
 			
-			if (d.querySelectorAll('.gmBuilder_group').length === 0) {
+			if (d.querySelectorAll('.ksoBuilder_group').length === 0) {
 				addGroup()
 			}
 		}

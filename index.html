@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<title>Keyboard Shortcut Overlay</title>
 	<link rel="stylesheet" href="css.css" media="all">
-	<link rel="stylesheet" href="keyboard-shortcut-overlay.css" media="all">
+	<link rel="stylesheet" href="kso.css" media="all">
 </head>
 <body>
 
@@ -15,7 +15,7 @@
 <p>Press <kbd>?</kbd> to show or hide the overlay. Or press <kbd>Esc</kbd> to hide the overlay.</p>
 
 
-<h2>Generate Greasemonkey script</h2>
+<h2>Create your own Keyboard Shortcuts Overlay</h2>
 
 <p>This will generate a greasemonkey script that uses the Keyboard Shortcut Overlay and your shortcuts.</p>
 
@@ -25,12 +25,12 @@
 
 <form id="js-shortcutsConf"></form>
 
-<h3>Your Greasemonkey script</h3>
+<h3>Your customised Keyboard Shortcuts Overlay</h3>
 
 
 
-<script src="keyboard-shortcut-overlay.js"></script>
-<script src="gmBuilder.js"></script>
+<script src="kso.js"></script>
+<script src="kso-builder.js"></script>
 <script>
 	var config = {
 		title: 'Keyboard Shortcuts',
@@ -55,7 +55,7 @@
 	
 	KSO.init(config)
 	
-	KSO_gmBuilder.init({ formId: 'js-shortcutsConf'})
+	KSO_builder.init({ formId: 'js-shortcutsConf'})
 </script>
 
 </body>
