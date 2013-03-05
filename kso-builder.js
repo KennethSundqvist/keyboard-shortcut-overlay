@@ -3,8 +3,13 @@
 		d = w.document,
 		// Form element
 		elForm,
+		// Form groups element
+		elGroups,
 		// HTML templates to render with. Use $placeholders
 		templates = {
+			groups: {
+			   type: 'div', className: 'ksoBuilder_groups'
+			},
 			group: {
 			   type: 'div', className: 'ksoBuilder_group',
 			   html: '<div class="ksoBuilder_group_title"><label>Group title <input name="groupTitle"></label> <button data-trigger="deleteGroup">Delete group</button></div>' +
@@ -21,12 +26,12 @@
 		}
 	
 	function init(config) {
-		var addGroupButton = renderTemplate(templates.addButton, { text: 'Add another group', trigger: 'addGroup' }),
-			elGroup,
-			elShortcut
-		
 		elForm = d.getElementById(config.formId)
-		elForm.appendChild(addGroupButton)
+		elGroups = renderTemplate(templates.groups)
+		
+		elForm.appendChild(renderTemplate(templates.addButton, { text: 'Add another group', trigger: 'addGroup' }))
+		elForm.appendChild(elGroups)
+		elForm.appendChild(renderTemplate(templates.addButton, { text: 'Add another group', trigger: 'addGroup' }))
 		
 		elForm.addEventListener('click', function(e) {
 			var trigger = e.target.getAttribute('data-trigger')
@@ -51,12 +56,14 @@
 		
 		if (template.className) el.className = template.className
 		
-		for (key in content) {
-			if (content.hasOwnProperty(key))
-				html = html.replace('$' + key, content[key])
+		if (html) {
+            for (key in content) {
+                if (content.hasOwnProperty(key))
+                    html = html.replace('$' + key, content[key])
+            }
+            
+            el.innerHTML = html
 		}
-		
-		el.innerHTML = html
 		
 		return el
 	}
@@ -69,7 +76,7 @@
 		
 		shortcuts.appendChild(shortcut)
 		group.appendChild(addShortcut)
-		elForm.appendChild(group)
+		elGroups.appendChild(group)
 	}
 	
 	function deleteGroup(elGroup) {
