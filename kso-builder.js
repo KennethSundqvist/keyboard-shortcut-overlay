@@ -1,8 +1,10 @@
 ;var KSO_builder = (function() {
 	var w = window,
 		d = w.document,
+		// Output element
+		elOutput = d.getElementById('js-output'),
 		// Form element
-		elForm,
+		elForm = d.getElementById('js-shortcutsConf'),
 		// Form groups element
 		elGroups,
 		// HTML templates to render with. Use $placeholders
@@ -20,23 +22,28 @@
 				html:'<td><input name="keys"></td><td><input name="desc"></td><td><button data-trigger="deleteShortcut">Delete</button></td>'
 			},
 			addButton: {
-				type: 'div', className: 'ksoBuilder_addButton',
+				type: 'div',
 				html: '<button data-trigger="$trigger">$text</button>'
+			},
+			submitButton: {
+				type: 'div',
+				html: '<input type="submit" value="Generate KSO">'
 			}
 		}
 	
-	function init(config) {
-		elForm = d.getElementById(config.formId)
+	function init() {
 		elGroups = renderTemplate(templates.groups)
 		
+		elForm.appendChild(renderTemplate(templates.submitButton))
 		elForm.appendChild(renderTemplate(templates.addButton, { text: 'Add another group', trigger: 'addGroup' }))
 		elForm.appendChild(elGroups)
 		elForm.appendChild(renderTemplate(templates.addButton, { text: 'Add another group', trigger: 'addGroup' }))
+		elForm.appendChild(renderTemplate(templates.submitButton))
 		
 		elForm.addEventListener('click', function(e) {
 			var trigger = e.target.getAttribute('data-trigger')
 			if (!trigger) return
-			e.preventDefault();
+			e.preventDefault()
 			
 			switch (trigger) {
 				case 'addGroup': addGroup(); break
@@ -45,6 +52,8 @@
 				case 'deleteShortcut': deleteShortcut(e.target.parentElement.parentElement); break
 			}
 		}, false)
+		
+		elForm.addEventListener('submit', parseForm, false)
 		
 		addGroup()
 	}
@@ -110,6 +119,39 @@
 		if (elGroup.children.length === 0) {
 			addShortcuts(elGroup, 1)
 		}
+	}
+	
+	function parseForm(e) {
+	    var data = [],
+	        group,
+	        shortcut
+	    
+	    e.preventDefault()
+	    
+	    Array.prototype.forEach.call(elGroups.querySelectorAll('input'), function(input) {
+	        switch (input.getAttribute('name')) {
+	            case 'groupTitle':
+	                group = {
+	                    title: input.value,
+	                    shortcuts: []
+	                }
+	                data.push(group)
+	                break;
+                
+                case 'keys':
+                    shortcut = [input.value]
+                    group.shortcuts.push(shortcut)
+                    break;
+                
+                case 'desc':
+                    shortcut[1] = input.value
+                    break;
+	        }
+	    })
+	    
+	    elOutput.value = 'KSO code before /*BEGIN_SHORTCUTS*/' +
+	                     JSON.stringify(data) +
+	                     '/*END_SHORTCUTS*/ KSO code after'
 	}
 	
 	return {
