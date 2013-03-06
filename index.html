@@ -1,10 +1,10 @@
 <!doctype html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Keyboard Shortcut Overlay</title>
-	<link rel="stylesheet" href="css.css" media="all">
-	<link rel="stylesheet" href="kso.css" media="all">
+    <meta charset="UTF-8">
+    <title>Keyboard Shortcut Overlay</title>
+    <link rel="stylesheet" href="css.css" media="all">
+    <link rel="stylesheet" href="kso.css" media="all">
 </head>
 <body>
 
@@ -33,30 +33,30 @@
 <script src="kso.js"></script>
 <script src="kso-builder.js"></script>
 <script>
-	var config = {
-		title: 'Keyboard Shortcuts',
-		groups: [
-			{
-				title: 'All kinds of stuff',
-				shortcuts: [
-					['<kbd>u</kbd>', 'Back to threadlist'],
-					['<kbd>j</kbd> / <kbd>k</kbd>', 'Next/previous item'],
-					['<kbd>o</kbd> or <kbd>&lt;Enter></kbd>', 'Open conversation; collapse/expand conversation'],
-					['<kbd>g</kbd> then <kbd>i</kbd>', 'Go to Inbox'],
-					['<kbd>&lt;Shift></kbd> + <kbd>x</kbd>', 'Expand folder'],
-					['<kbd>&lt;Shift></kbd> + <kbd>n</kbd> / <kbd>p</kbd>', 'Next/previous subscription']
-				]
-			}
-		]
-	}
-	
-	for (var i = 0; i < 6; i++) {
-		config.groups.push(config.groups[0])
-	}
-	
-	KSO.init(config)
-	
-	KSO_builder.init()
+    var config = {
+            title: 'Keyboard Shortcuts',
+            groups: [
+                {
+                    title: 'All kinds of stuff',
+                    shortcuts: [
+                        ['<kbd>u</kbd>', 'Back to threadlist'],
+                        ['<kbd>j</kbd> / <kbd>k</kbd>', 'Next/previous item'],
+                        ['<kbd>o</kbd> or <kbd>&lt;Enter></kbd>', 'Open conversation; collapse/expand conversation'],
+                        ['<kbd>g</kbd> then <kbd>i</kbd>', 'Go to Inbox'],
+                        ['<kbd>&lt;Shift></kbd> + <kbd>x</kbd>', 'Expand folder'],
+                        ['<kbd>&lt;Shift></kbd> + <kbd>n</kbd> / <kbd>p</kbd>', 'Next/previous subscription']
+                    ]
+                }
+            ]
+        }
+    
+    for (var i = 0; i < 6; i++) {
+        config.groups.push(config.groups[0])
+    }
+    
+    KSO.init(config)
+    
+    KSO_builder.init()
 </script>
 
 </body>

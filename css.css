@@ -1,55 +1,55 @@
 body {
-	margin: 1.5em 5.5555%;
-	color: #333;
-	background: #fff;
-	font: 100%/1.5 Arial, sans-serif;
+    margin: 1.5em 5.5555%;
+    color: #333;
+    background: #fff;
+    font: 100%/1.5 Arial, sans-serif;
 }
 
 kbd {
-	padding: .1em .3em;
-	color: #6a5a00;
-	background: #fff9c9;
-	border: 1px solid #e0d785;
-	font-size: 1.25em;
+    padding: .1em .3em;
+    color: #6a5a00;
+    background: #fff9c9;
+    border: 1px solid #e0d785;
+    font-size: 1.25em;
 }
 
 /*
-	KSO builder
+    KSO builder
 */
 
 .ksoBuilder_group {
-	margin: .375em 0;
-	padding: .375em;
-	border: 1px solid #ddd;
+    margin: .375em 0;
+    padding: .375em;
+    border: 1px solid #ddd;
 }
-		
-	.ksoBuilder_group input {
-		padding: 0 .375em;
-		color: #333;
-		background: #fff;
-		border: 1px solid #aaa;
-		font: 1em/1.4 Arial, sans-serif;
-	}
-	
-		.ksoBuilder_group input:focus {
-			background: #edf7ff;
-			border-color: #3aacff;
-			outline: 0;
-		}
+        
+    .ksoBuilder_group input {
+        padding: 0 .375em;
+        color: #333;
+        background: #fff;
+        border: 1px solid #aaa;
+        font: 1em/1.4 Arial, sans-serif;
+    }
+    
+        .ksoBuilder_group input:focus {
+            background: #edf7ff;
+            border-color: #3aacff;
+            outline: 0;
+        }
 
-	.ksoBuilder_group_title {
-		margin-bottom: .375em;
-		padding-bottom: .375em;
-		border-bottom: 1px solid #ddd;
-		font-weight: bold;
-	}
+    .ksoBuilder_group_title {
+        margin-bottom: .375em;
+        padding-bottom: .375em;
+        border-bottom: 1px solid #ddd;
+        font-weight: bold;
+    }
 
-	.ksoBuilder_group_shortcuts {
-		border-collapse: collapse;
-	}
-	
-		.ksoBuilder_group_shortcuts th {
-			text-align: left;
-			font-size: .875em;
-			line-height: 1;
-		}
+    .ksoBuilder_group_shortcuts {
+        border-collapse: collapse;
+    }
+    
+        .ksoBuilder_group_shortcuts th {
+            text-align: left;
+            font-size: .875em;
+            line-height: 1;
+        }
