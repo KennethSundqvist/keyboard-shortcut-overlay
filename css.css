@@ -17,25 +17,18 @@ kbd {
     KSO builder
 */
 
+.ksoBuilder_configTitle {
+    margin: .66666em 0;
+    font-weight: bold;
+    font-size: 1.125em;
+}
+
 .ksoBuilder_group {
     margin: .375em 0;
     padding: .375em;
     border: 1px solid #ddd;
 }
         
-    .ksoBuilder_group input {
-        padding: 0 .375em;
-        color: #333;
-        background: #fff;
-        border: 1px solid #aaa;
-        font: 1em/1.4 Arial, sans-serif;
-    }
-    
-        .ksoBuilder_group input:focus {
-            background: #edf7ff;
-            border-color: #3aacff;
-            outline: 0;
-        }
 
     .ksoBuilder_group_title {
         margin-bottom: .375em;
@@ -53,3 +46,17 @@ kbd {
             font-size: .875em;
             line-height: 1;
         }
+
+.ksoBuilder input[type=text] {
+    padding: 0 .375em;
+    color: #333;
+    background: #fff;
+    border: 1px solid #aaa;
+    font: 1em/1.4 Arial, sans-serif;
+}
+
+    .ksoBuilder input[type=text]:focus {
+        background: #edf7ff;
+        border-color: #3aacff;
+        outline: 0;
+    }

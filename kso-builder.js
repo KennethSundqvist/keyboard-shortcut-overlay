@@ -11,17 +11,21 @@
         elGroups,
         // HTML templates to render with. Use $placeholders
         templates = {
+            configTitle: {
+                type: 'div', className: 'ksoBuilder_configTitle',
+                html: '<label>Overlay title <input name="configTitle" type="text"></label>'
+            },
             groups: {
                 type: 'div', className: 'ksoBuilder_groups'
             },
             group: {
                 type: 'div', className: 'ksoBuilder_group',
-                html: '<div class="ksoBuilder_group_title"><label>Group title <input name="groupTitle"></label> <button data-trigger="deleteGroup">Delete group</button></div>' +
+                html: '<div class="ksoBuilder_group_title"><label>Group title <input name="groupTitle" type="text"></label> <button data-trigger="deleteGroup">Delete group</button></div>' +
                       '<table class="ksoBuilder_group_shortcuts"><thead><tr><th>Shortcuts</th><th>Description</th><td></td></tr></thead><tbody></tbody></table>'
             },
             shortcut: {
                 type: 'tr',
-                html: '<td><input name="keys"></td><td><input name="desc"></td><td><button data-trigger="deleteShortcut">Delete</button></td>'
+                html: '<td><input name="keys" type="text"></td><td><input name="desc" type="text"></td><td><button data-trigger="deleteShortcut">Delete</button></td>'
             },
             addButton: {
                 type: 'div',
@@ -39,8 +43,7 @@
     function init() {
         elGroups = renderTemplate(templates.groups)
         
-        elForm.appendChild(renderTemplate(templates.submitButton))
-        elForm.appendChild(renderTemplate(templates.addButton, { text: 'Add another group', trigger: 'addGroup' }))
+        elForm.appendChild(renderTemplate(templates.configTitle))
         elForm.appendChild(elGroups)
         elForm.appendChild(renderTemplate(templates.addButton, { text: 'Add another group', trigger: 'addGroup' }))
         elForm.appendChild(renderTemplate(templates.submitButton))
@@ -129,35 +132,41 @@
     }
     
     function parseForm(e) {
-        var data = [],
+        var newConfig = { groups: [] },
             group,
             shortcut
         
         e.preventDefault()
         
-        Array.prototype.forEach.call(elGroups.querySelectorAll('input'), function(input) {
+        Array.prototype.forEach.call(elForm.querySelectorAll('input[type=text]'), function(input) {
+            var value = input.value
+            
             switch (input.getAttribute('name')) {
+                case 'configTitle':
+                    newConfig.title = value
+                    break
+                    
                 case 'groupTitle':
                     group = {
-                        title: input.value,
+                        title: value,
                         shortcuts: []
                     }
-                    data.push(group)
-                    break;
+                    newConfig.groups.push(group)
+                    break
                 
                 case 'keys':
-                    shortcut = [input.value]
+                    shortcut = [value]
                     group.shortcuts.push(shortcut)
-                    break;
+                    break
                 
                 case 'desc':
-                    shortcut[1] = input.value
-                    break;
+                    shortcut[1] = value
+                    break
             }
         })
         
         elOutput.value = 'KSO code before /*BEGIN_SHORTCUTS*/' +
-                         JSON.stringify(data) +
+                         JSON.stringify(newConfig) +
                          '/*END_SHORTCUTS*/ KSO code after'
     }
     
