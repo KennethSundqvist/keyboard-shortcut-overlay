@@ -5,8 +5,12 @@
         elOutput = d.getElementById('js-output'),
         // Input element
         elInput = d.getElementById('js-input'),
+        // Input error message element
+        elInputError = d.getElementById('js-inputError'),
         // Form element
         elForm = d.getElementById('js-shortcutsConf'),
+        // Form configuration title input element
+        elConfigTitle,
         // Form groups element
         elGroups,
         // HTML templates to render with. Use $placeholders
@@ -20,12 +24,12 @@
             },
             group: {
                 type: 'div', className: 'ksoBuilder_group',
-                html: '<div class="ksoBuilder_group_title"><label>Group title <input name="groupTitle" type="text"></label> <button data-trigger="deleteGroup">Delete group</button></div>' +
+                html: '<div class="ksoBuilder_group_title"><label>Group title <input name="groupTitle" type="text" value="$title"></label> <button data-trigger="deleteGroup">Delete group</button></div>' +
                       '<table class="ksoBuilder_group_shortcuts"><thead><tr><th>Shortcuts</th><th>Description</th><td></td></tr></thead><tbody></tbody></table>'
             },
             shortcut: {
                 type: 'tr',
-                html: '<td><input name="keys" type="text"></td><td><input name="desc" type="text"></td><td><button data-trigger="deleteShortcut">Delete</button></td>'
+                html: '<td><input name="keys" type="text" value="$keys"></td><td><input name="desc" type="text" value="$desc"></td><td><button data-trigger="deleteShortcut">Delete</button></td>'
             },
             addButton: {
                 type: 'div',
@@ -37,18 +41,19 @@
             }
         },
         // RegExp to extract the configuration when loading shortcuts
-        loadRegExp = /\/\*BEGIN_SHORTCUTS\*\/(.+)\/\*END_SHORTCUTS\*\//
+        loadRegExp = /\/\*BEGIN_CONFIG\*\/(.+)\/\*END_CONFIG\*\//
         
     
-    function init() {
+    function init(config) {
+        elConfigTitle = renderTemplate(templates.configTitle)
         elGroups = renderTemplate(templates.groups)
         
-        elForm.appendChild(renderTemplate(templates.configTitle))
+        elForm.appendChild(elConfigTitle)
         elForm.appendChild(elGroups)
         elForm.appendChild(renderTemplate(templates.addButton, { text: 'Add another group', trigger: 'addGroup' }))
         elForm.appendChild(renderTemplate(templates.submitButton))
         
-        d.getElementById('js-inputSubmit').addEventListener('click', loadShortcuts, false)
+        d.getElementById('js-inputSubmit').addEventListener('click', loadConfig, false)
         
         elForm.addEventListener('click', function(e) {
             var trigger = e.target.getAttribute('data-trigger')
@@ -65,7 +70,8 @@
         
         elForm.addEventListener('submit', parseForm, false)
         
-        addGroup()
+        if (config) loadConfig(config)
+        else addGroup()
     }
     
     function renderTemplate(template, content) {
@@ -87,13 +93,20 @@
         return el
     }
     
-    function addGroup() {
-        var group = renderTemplate(templates.group),
+    function addGroup(config) {
+        var group = renderTemplate(templates.group, { title: (config && config.title) || '' }),
             shortcuts = group.querySelector('tbody'),
-            shortcut = renderTemplate(templates.shortcut, {}),
             addShortcut = renderTemplate(templates.addButton, { text: 'Add more shortcuts', trigger: 'addShortcuts' })
         
-        shortcuts.appendChild(shortcut)
+        if (config && config.shortcuts.length) {
+            config.shortcuts.forEach(function(sc) {
+                shortcuts.appendChild(renderTemplate(templates.shortcut, { keys: sc[0], desc: sc[1] }))
+            })
+        }
+        else {
+            shortcuts.appendChild(renderTemplate(templates.shortcut, { keys: '', desc: '' }))
+        }
+        
         group.appendChild(addShortcut)
         elGroups.appendChild(group)
     }
@@ -115,7 +128,7 @@
             i = 0
         
         for ( ; i < numberOfShortcuts; i++) {
-            shortcut = renderTemplate(templates.shortcut)
+            shortcut = renderTemplate(templates.shortcut, { keys: '', desc: '' })
             group.appendChild(shortcut)
             if (i === 0) shortcut.querySelector('input').focus()
         }
@@ -165,13 +178,38 @@
             }
         })
         
-        elOutput.value = 'KSO code before /*BEGIN_SHORTCUTS*/' +
+        elOutput.value = 'KSO code before /*BEGIN_CONFIG*/' +
                          JSON.stringify(newConfig) +
-                         '/*END_SHORTCUTS*/ KSO code after'
+                         '/*END_CONFIG*/ KSO code after'
     }
     
-    function loadShortcuts() {
-        var config = JSON.parse(elInput.value.match(loadRegExp)[1])
+    function loadConfig(config) {
+        var i
+        
+        if (config.target) {
+            try { config = elInput.value.match(loadRegExp)[1] }
+            catch (e) { elInputError.innerHTML = 'Could not find the configuration :('; return }
+
+            try { config = JSON.parse(config) }
+            catch (e) { elInputError.innerHTML = 'Configuration is not valid JSON :('; return }
+        }
+        
+        if (elGroups.children) {
+            for (i = elGroups.children.length - 1 ; i >= 0; i--) {
+                elGroups.children[i].parentElement.removeChild(elGroups.children[i])
+            }
+        }
+        
+        elConfigTitle.querySelector('input').value = config.title || ''
+        
+        if (config.groups && config.groups.length) {
+            config.groups.forEach(function(group) {
+                addGroup(group)
+            })
+        }
+        else {
+            addGroup()
+        }
     }
     
     return {

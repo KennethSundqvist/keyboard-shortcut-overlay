@@ -32,6 +32,8 @@
 
 <p><textarea id="js-input" cols="100" rows="5"></textarea></p>
 
+<p id="js-inputError" class="errorMessage"></p>
+
 <p><button id="js-inputSubmit">Load shortcuts</button></p>
 
 
@@ -64,9 +66,9 @@
         config.groups.push(config.groups[0])
     }
     
-    document.getElementById('js-input').value = 'KBO code before /*BEGIN_SHORTCUTS*/' +
+    document.getElementById('js-input').value = 'KBO code before /*BEGIN_CONFIG*/' +
                                                 JSON.stringify(config) +
-                                                '/*END_SHORTCUTS*/ KBO code after'
+                                                '/*END_CONFIG*/ KBO code after'
     
     KSO.init(config)
     
