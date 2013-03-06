@@ -3,6 +3,8 @@
         d = w.document,
         // Output element
         elOutput = d.getElementById('js-output'),
+        // Input element
+        elInput = d.getElementById('js-input'),
         // Form element
         elForm = d.getElementById('js-shortcutsConf'),
         // Form groups element
@@ -29,7 +31,10 @@
                 type: 'div',
                 html: '<input type="submit" value="Generate KSO">'
             }
-        }
+        },
+        // RegExp to extract the configuration when loading shortcuts
+        loadRegExp = /\/\*BEGIN_SHORTCUTS\*\/(.+)\/\*END_SHORTCUTS\*\//
+        
     
     function init() {
         elGroups = renderTemplate(templates.groups)
@@ -39,6 +44,8 @@
         elForm.appendChild(elGroups)
         elForm.appendChild(renderTemplate(templates.addButton, { text: 'Add another group', trigger: 'addGroup' }))
         elForm.appendChild(renderTemplate(templates.submitButton))
+        
+        d.getElementById('js-inputSubmit').addEventListener('click', loadShortcuts, false)
         
         elForm.addEventListener('click', function(e) {
             var trigger = e.target.getAttribute('data-trigger')
@@ -152,6 +159,10 @@
         elOutput.value = 'KSO code before /*BEGIN_SHORTCUTS*/' +
                          JSON.stringify(data) +
                          '/*END_SHORTCUTS*/ KSO code after'
+    }
+    
+    function loadShortcuts() {
+        var config = JSON.parse(elInput.value.match(loadRegExp)[1])
     }
     
     return {

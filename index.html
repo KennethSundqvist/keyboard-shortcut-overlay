@@ -8,6 +8,7 @@
 </head>
 <body>
 
+
 <h1>Keyboard Shortcut Overlay</h1>
 
 <p>An overlay with keyboard shortcuts available on the page. Inspired by Gmail and similar implementations.</p>
@@ -21,9 +22,18 @@
 
 <p>The version of Keyboard Shortcut Overlay loaded is always the latest one on GitHub: <a href="https://github.com/EvilOatmeal/keyboard-shortcut-overlay/blob/master/keyboard-shortcut-overlay.js">this one</a>.</p>
 
+
 <h3>Set shortcuts</h3>
 
 <form id="js-shortcutsConf"></form>
+
+
+<h4>Load shortcuts from an existing Keyboard Shortcuts Overlay</h4>
+
+<p><textarea id="js-input" cols="100" rows="5"></textarea></p>
+
+<p><button id="js-inputSubmit">Load shortcuts</button></p>
+
 
 <h3>Your customised Keyboard Shortcuts Overlay</h3>
 
@@ -53,6 +63,10 @@
     for (var i = 0; i < 6; i++) {
         config.groups.push(config.groups[0])
     }
+    
+    document.getElementById('js-input').value = 'KBO code before /*BEGIN_SHORTCUTS*/' +
+                                                JSON.stringify(config) +
+                                                '/*END_SHORTCUTS*/ KBO code after'
     
     KSO.init(config)
     
