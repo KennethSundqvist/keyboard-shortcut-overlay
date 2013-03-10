@@ -37,7 +37,7 @@ var KSO = (function() {
                 }
                 // Only create the overlay if it's called for
                 else {
-                    setupGui()
+                    setupGui(config)
                     visible = true
                 }
             }
@@ -71,7 +71,7 @@ var KSO = (function() {
         }
     }
     
-    function setupGui() {
+    function setupGui(config) {
             // Rendered HTML
         var overlayHtml,
             groupsHtml = '',
