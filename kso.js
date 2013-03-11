@@ -17,8 +17,6 @@ var KSO = (function() {
         hideTimer,
         // RegExp for finding separator words and characters in the shortcuts
         regExpShortcutSeparators = /(.+\s+)(or|then|\/|\+)(\s+.+)/gi,
-        // RegExp cache
-        regExpCache = {},
         // HTML templates.
         // The templates can have placeholders, and they are formatted as "$placeholder"
         templates = {
@@ -61,7 +59,7 @@ var KSO = (function() {
         while (i < cn.length) {
             if (cn[i] !== '') {
                 // Use the RegExp Cache
-                regExp = regExpCache[cn[i]] = regExpCache[cn[i]] || new RegExp('(\s*|^)' + cn[i] + '(\s*|$)', 'g')
+                regExp = new RegExp('(\s*|^)' + cn[i] + '(\s*|$)', 'g')
                 
                 if (action === 'set' && !el.className.match(regExp)) {
                     el.className += ' ' + cn[i]
