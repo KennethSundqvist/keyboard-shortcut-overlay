@@ -117,14 +117,13 @@
                     }
                     
                         .KSO_shortcuts th {
-                            text-align: right;
-                            font-weight: normal;
-                        }
-                        
-                        
-                        .KSO_shortcuts kbd {
-                            padding: 0;
                             color: #ed0;
-                            background: transparent;
-                            border: 0;
+                            text-align: right;
+                            font-weight: bold;
                         }
+                        
+                        
+                            .KSO_shortcuts span {
+                                color: #fff;
+                                font-weight: normal;
+                            }

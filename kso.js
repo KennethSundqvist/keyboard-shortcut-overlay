@@ -15,6 +15,8 @@ var KSO = (function() {
         // Timers for showing/hiding overlay animation
         showTimer,
         hideTimer,
+        // RegExp for finding separator words and characters in the shortcuts
+        regExpShortcutSeparators = /(.+\s+)(or|then|\/|\+)(\s+.+)/gi,
         // RegExp cache
         regExpCache = {},
         // HTML templates to render with. Use $placeholders
@@ -22,6 +24,7 @@ var KSO = (function() {
             wrap: '<div class="KSO_inner"><div class="KSO_title">$title</div>$filter<div class="KSO_groups">$groups</div></div>',
             group: '<div class="KSO_group"><table><thead><tr><td></td><td class="KSO_group_title">$title</td></tr></thead><tbody class="KSO_shortcuts">$shortcuts</tbody></table></div>',
             shortcut: '<tr><th>$keys :&nbsp;</th><td>$description</td></tr>',
+            shortcutSeparator: '<span>$key</span>',
             filter: '<label class="KSO_filter">Filter <input/></label>'
         }
     
@@ -95,7 +98,7 @@ var KSO = (function() {
             for (x = 0; x < shortcuts.length; x++) {
                 // Render shortcut HTML
                 shortcutsHtml += templates.shortcut
-                    .replace('$keys', shortcuts[x][0])
+                    .replace('$keys', shortcuts[x][0].replace(regExpShortcutSeparators, '$1' + templates.shortcutSeparator.replace('$key', '$2') + '$3'))
                     .replace('$description', shortcuts[x][1])
             }
             
