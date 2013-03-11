@@ -13,7 +13,8 @@
         $editorTitle,
         // Holds all groups in the config editor form
         $editorGroups,
-        // HTML templates to render with. Use $placeholders
+        // HTML templates.
+        // The templates can have placeholders, and they are formatted as "$placeholder"
         templates = {
             configTitle: '<div class="ksoBuilder_configTitle"><label>Overlay title <input name="configTitle" type="text"></label></div>',
             groups: '<div class="ksoBuilder_groups"></div>',
@@ -76,6 +77,11 @@
         else addGroup()
     }
     
+    // Takes the name of a template and the data to populate
+    // it with, and then returns a populated jQuery object of if.
+    // The data is an object with its key names corresponding
+    // to placeholders in the template.
+    // The value of each key should be a string or a number.
     function template(template, data) {
         template = templates[template]
         

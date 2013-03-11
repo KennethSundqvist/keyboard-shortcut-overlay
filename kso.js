@@ -19,7 +19,8 @@ var KSO = (function() {
         regExpShortcutSeparators = /(.+\s+)(or|then|\/|\+)(\s+.+)/gi,
         // RegExp cache
         regExpCache = {},
-        // HTML templates to render with. Use $placeholders
+        // HTML templates.
+        // The templates can have placeholders, and they are formatted as "$placeholder"
         templates = {
             wrap: '<div class="KSO_inner"><div class="KSO_title">$title</div>$filter<div class="KSO_groups">$groups</div></div>',
             group: '<div class="KSO_group"><table><thead><tr><td></td><td class="KSO_group_title">$title</td></tr></thead><tbody class="KSO_shortcuts">$shortcuts</tbody></table></div>',
@@ -74,6 +75,23 @@ var KSO = (function() {
         }
     }
     
+    // Takes the name of a template and the data to populate
+    // it with, and then returns the populated template string.
+    // The data is an object with its key names corresponding
+    // to placeholders in the template.
+    // The value of each key should be a string or a number.
+    function template(template, data) {
+        template = templates[template]
+        
+        for (var key in data) {
+            if (data.hasOwnProperty(key))
+                // Placeholders are formatted as "$key"
+                template = template.replace('$' + key, data[key])
+        }
+        
+        return template
+    }
+    
     function setupGui(config) {
             // Rendered HTML
         var overlayHtml,
@@ -97,22 +115,25 @@ var KSO = (function() {
             // For all shortcuts in each group
             for (x = 0; x < shortcuts.length; x++) {
                 // Render shortcut HTML
-                shortcutsHtml += templates.shortcut
-                    .replace('$keys', shortcuts[x][0].replace(regExpShortcutSeparators, '$1' + templates.shortcutSeparator.replace('$key', '$2') + '$3'))
-                    .replace('$description', shortcuts[x][1])
+                shortcutsHtml += template('shortcut' , {
+                    keys: shortcuts[x][0].replace(regExpShortcutSeparators, '$1' + template('shortcutSeparator', { 'key': '$2'}) + '$3'),
+                    description: shortcuts[x][1]
+                })
             }
             
             // Render group HTML
-            groupsHtml += templates.group
-                .replace('$title', config.groups[i].title)
-                .replace('$shortcuts', shortcutsHtml)
+            groupsHtml += template('group', {
+                title: config.groups[i].title,
+                shortcuts: shortcutsHtml
+            })
         }
         
         // Render overlay HTML
-        overlayHtml = templates.wrap
-            .replace('$title', config.title)
-            .replace('$filter', templates.filter)
-            .replace('$groups', groupsHtml)
+        overlayHtml = template('wrap', {
+            title: config.title,
+            filter: templates.filter,
+            groups: groupsHtml
+        })
             
         elOverlay = d.createElement('div')
         handleClassName('set', elOverlay, 'KSO KSO_hidden')
