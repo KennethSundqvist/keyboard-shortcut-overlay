@@ -22,7 +22,7 @@ var KSO = (function() {
         templates = {
             wrap: '<div class="KSO_inner"><div class="KSO_title">$title</div>$filter<div class="KSO_groups">$groups</div></div>',
             group: '<div class="KSO_group"><table><thead><tr><td></td><td class="KSO_group_title">$title</td></tr></thead><tbody class="KSO_shortcuts">$shortcuts</tbody></table></div>',
-            shortcut: '<tr><th>$keys :&nbsp;</th><td>$description</td></tr>',
+            shortcut: '<tr><th>$keys</th><td>&nbsp;:&nbsp;$description</td></tr>',
             shortcutSeparator: '<span>$key</span>',
             filter: '<label class="KSO_filter">Filter <input/></label>'
         }
