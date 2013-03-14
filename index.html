@@ -49,32 +49,107 @@
 <script src="kso-builder.js"></script>
 <script>
     (function($) {
-        var config = {
-                title: 'Keyboard Shortcuts',
+        var configs = {
+            randomStuff: {
+                title: 'Random Keyboard Shortcuts',
+                groups: (function() {
+                    var groups = [
+                        {
+                            title: 'All kinds of stuff',
+                            shortcuts: [
+                                ['u', 'Back to threadlist'],
+                                ['j / k', 'Next/previous item'],
+                                ['o or Enter', 'Open conversation; collapse/expand conversation'],
+                                ['g then i', 'Go to Inbox'],
+                                ['Shift + x', 'Expand folder'],
+                                ['Shift + n / p', 'Next/previous subscription']
+                            ]
+                        }
+                    ]
+                    for (var i = 0; i < 6; i++) {
+                        groups.push(groups[0])
+                    }
+                    return groups
+                }())
+            },
+
+            rememberTheMilk: {
+                title: 'Remember The Milk Keyboard Shortcuts',
                 groups: [
                     {
-                        title: 'All kinds of stuff',
+                        title: 'General',
                         shortcuts: [
-                            ['u', 'Back to threadlist'],
-                            ['j / k', 'Next/previous item'],
-                            ['o or &lt;Enter>', 'Open conversation; collapse/expand conversation'],
-                            ['g then i', 'Go to Inbox'],
-                            ['&lt;Shift> + x', 'Expand folder'],
-                            ['&lt;Shift> + n / p', 'Next/previous subscription']
+                            ['z', 'Undo the last action'],
+                            ['Ctrl + Shift + 6', 'Switch to the Overview screen'],
+                            ['Ctrl + Shift + 7', 'Switch to the Tasks screen'],
+                            ['Ctrl + Shift + 8', 'Switch to the Locations screen'],
+                            ['Ctrl + Shift + 9', 'Switch to the Contacts screen'],
+                            ['Ctrl + Shift + 0', 'Switch to the Settings screen'],
+                            ['Ctrl + Shift + /', 'Moves the cursor to the search box'],
+                            ['Ctrl + Shift + l', 'Go to Login screen (from homepage)'],
+                            ['Tab', 'Save input and move to the next input field'],
+                            ['Esc', 'Remove the cursor from the current input field']
+                        ]
+                    },
+                    {
+                        title: 'Items',
+                        shortcuts: [
+                            ['t', 'Add a new item to the current list'],
+                            ['c', 'Complete the selected task/s'],
+                            ['r', 'Rename the selected item'],
+                            ['Delete', 'Delete the currently selected task(s)'],
+                            ['p', 'Postpone the selected task/s by one day if they have a due date'],
+                            ['d', 'Change the due date of the selected task'],
+                            ['f', 'Change the repeat of the selected task'],
+                            ['g', 'Change the time estimate of the selected task'],
+                            ['s', 'Change the tags for the selected task'],
+                            ['u', 'Change the URL for the selected task'],
+                            ['l', 'Change the location for the selected task'],
+                            ['y', 'Add a note to the selected task'],
+                            ['1', 'Set the priority of the selected task/s to 1'],
+                            ['2', 'Set the priority of the selected task/s to 2'],
+                            ['3', 'Set the priority of the selected task/s to 3'],
+                            ['4', 'Set the selected task/s to have no priority']
+                        ]
+                    },
+                    {
+                        title: 'Lists',
+                        shortcuts: [
+                            ['Ctrl + Shift + Right', 'Switch to the next list'],
+                            ['Ctrl + Shift + Left', 'Switch to the previous list'],
+                            ['a', 'Select all items in the current list'],
+                            ['n', 'Select none of the items in the current list'],
+                            ['k', 'When on a list, move the cursor up'],
+                            ['j', 'When on a list, move the cursor down'],
+                            ['i', 'When on a list, select an item'],
+                            ['h', 'Switch between tabs (e.g. Task and Notes)'],
+                            ['m', 'Toggle multi-edit mode on or off.']
+                        ]
+                    },
+                    {
+                        // Note: You may need to click on the map first before map keyboard shortcuts will work.
+                        title: 'Location',
+                        shortcuts: [
+                            ['Arrow Keys', 'Move around the map'],
+                            ['Page Up, Page Dn, Home, End', 'Move around the map with a wider pan than arrow keys'],
+                            ['+', 'Zoom in on the map'],
+                            ['-', 'Zoom out on the map'],
+                            ['Ctrl + Shift + l', 'Moves the cursor to the location \'go\' box']
                         ]
                     }
+                    
+
                 ]
             }
+        },
+//        configToUse = configs.randomStuff
+        configToUse = configs.rememberTheMilk
+
+        $('#js-configLoader textarea').val('KBO code before /*BEGIN_CONFIG*/' + JSON.stringify(configToUse) + '/*END_CONFIG*/ KBO code after')
         
-        for (var i = 0; i < 6; i++) {
-            config.groups.push(config.groups[0])
-        }
+        KSO.init(configToUse)
         
-        $('#js-configLoader textarea').val('KBO code before /*BEGIN_CONFIG*/' + JSON.stringify(config) + '/*END_CONFIG*/ KBO code after')
-        
-        KSO.init(config)
-        
-        KSO_builder.init()
+        KSO_builder.init(/*configToUse*/)
     }(jQuery))
 </script>
 
