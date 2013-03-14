@@ -16,7 +16,7 @@ var KSO = (function() {
         showTimer,
         hideTimer,
         // RegExp for finding separator words and characters in the shortcuts
-        regExpShortcutSeparators = /(.+\s+)(or|then|\/|\+)(\s+.+)/gi,
+        regExpShortcutSeparators = /(.+?\s+)(or|then|\/|\+)(\s+.+?)/gi,
         // HTML templates.
         // The templates can have placeholders, and they are formatted as "$placeholder"
         templates = {
